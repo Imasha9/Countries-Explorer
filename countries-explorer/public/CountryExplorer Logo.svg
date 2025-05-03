@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background Circle -->
+  <circle cx="250" cy="250" r="240" fill="#f0f9ff" stroke="#3b82f6" stroke-width="8"/>
+  
+  <!-- World Map Simplified Outline -->
+  <g transform="translate(100, 130) scale(0.6)">
+    <!-- Stylized Continents -->
+    <path d="M100,120 C150,80 200,100 250,90 C300,80 350,100 400,70 C450,40 500,60 500,130 C500,200 450,220 400,240 C350,260 300,280 250,260 C200,240 150,260 100,230 C50,200 50,160 100,120" 
+          fill="#3b82f6" fill-opacity="0.7"/>
+    <path d="M150,180 C200,150 250,170 300,150 C350,130 400,150 450,120 C500,90 550,110 550,180 C550,250 500,270 450,290 C400,310 350,330 300,310 C250,290 200,310 150,280 C100,250 100,210 150,180" 
+          fill="#2563eb" fill-opacity="0.7" transform="translate(-30, 20)"/>
+  </g>
+  
+  <!-- Magnifying Glass -->
+  <g transform="translate(280, 280) rotate(-15)">
+    <!-- Glass -->
+    <circle cx="0" cy="0" r="70" fill="none" stroke="#1e40af" stroke-width="12"/>
+    <!-- Handle -->
+    <line x1="50" y1="50" x2="100" y2="100" stroke="#1e40af" stroke-width="15" stroke-linecap="round"/>
+  </g>
+  
+  <!-- Text "CountryExplorer" -->
+  <g transform="translate(250, 400)">
+    <text x="0" y="0" font-family="Arial, sans-serif" font-weight="bold" font-size="34" text-anchor="middle" fill="#1e40af">Globe Dash</text>
+  </g>
+  
+  <!-- Location Pin -->
+  <g transform="translate(180, 210) scale(0.8)">
+    <path d="M0,-60 C-30,-60 -50,-30 -50,0 C-50,30 0,90 0,90 C0,90 50,30 50,0 C50,-30 30,-60 0,-60" fill="#ef4444" stroke="#b91c1c" stroke-width="6"/>
+    <circle cx="0" cy="0" r="15" fill="white"/>
+  </g>
+</svg>
