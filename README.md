@@ -9,7 +9,7 @@ CountryExplorer is a React-based web application that allows users to explore in
 
 ## Live Demo
 
-[Visit CountryExplorer](https://country-explorer-react.netlify.app)
+[Visit CountryExplorer]([https://country-explorer-react.netlify.app](https://globedash.netlify.app))
 
 ## Features
 
