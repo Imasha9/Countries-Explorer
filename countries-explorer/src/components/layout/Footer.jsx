@@ -203,6 +203,8 @@ const Footer = () => {
               <LinkedInIcon fontSize="small" />
             </IconButton>
           </Box>
+          
+          
         </Box>
         
         <Divider sx={{ 

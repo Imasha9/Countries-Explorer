@@ -1,6 +1,7 @@
 import { createContext, useState, useContext, useMemo } from 'react';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
+import { useLocation } from 'react-router-dom';
 
 // Create the theme context
 const ThemeContext = createContext({
@@ -18,6 +19,15 @@ export const ThemeContextProvider = ({ children }) => {
     localStorage.getItem('theme') === 'dark' ? 'dark' : 'light'
   );
 
+  // Get current location to check for auth pages
+  const location = useLocation();
+  
+  // Check if we're on login or register page
+  const isAuthPage = ['/login', '/register'].includes(location.pathname);
+  
+  // Force light theme on auth pages
+  const currentMode = isAuthPage ? 'light' : mode;
+
   // Toggle theme function
   const toggleColorMode = () => {
     const newMode = mode === 'light' ? 'dark' : 'light';
@@ -31,8 +41,8 @@ export const ThemeContextProvider = ({ children }) => {
     () =>
       createTheme({
         palette: {
-          mode,
-          ...(mode === 'light'
+          mode: currentMode,
+          ...(currentMode === 'light'
             ? {
                 // Light theme
                 primary: {
@@ -113,7 +123,7 @@ export const ThemeContextProvider = ({ children }) => {
                 transition: 'all 0.3s ease',
                 '&:hover': {
                   transform: 'translateY(-5px)',
-                  boxShadow: mode === 'dark' 
+                  boxShadow: currentMode === 'dark' 
                     ? '0 10px 20px rgba(0,0,0,0.7)' 
                     : '0 10px 20px rgba(0,0,0,0.1)',
                 },
@@ -129,7 +139,7 @@ export const ThemeContextProvider = ({ children }) => {
           },
         },
       }),
-    [mode]
+    [currentMode]
   );
 
   // Context value

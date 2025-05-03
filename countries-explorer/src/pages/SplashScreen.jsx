@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Box, Typography, LinearProgress, useTheme } from '@mui/material';
+import { Box, Typography, LinearProgress, useTheme, useMediaQuery } from '@mui/material';
 import { keyframes } from '@mui/system';
 import { useNavigate } from 'react-router-dom';
 import PublicIcon from '@mui/icons-material/Public';
@@ -30,6 +30,7 @@ const SplashScreen = () => {
   const [progress, setProgress] = useState(0);
   const navigate = useNavigate();
   const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -74,12 +75,12 @@ const SplashScreen = () => {
       }}
     >
       {/* Floating decorative stars */}
-      {[...Array(8)].map((_, i) => (
+      {[...Array(isMobile ? 4 : 8)].map((_, i) => (
         <StarBorderIcon
           key={i}
           sx={{
             position: 'absolute',
-            fontSize: 16,
+            fontSize: isMobile ? 12 : 16,
             color: 'rgba(255,255,255,0.7)',
             top: `${Math.random() * 100}%`,
             left: `${Math.random() * 100}%`,
@@ -94,7 +95,7 @@ const SplashScreen = () => {
         sx={{
           textAlign: 'center',
           zIndex: 1,
-          px: 3,
+          px: isMobile ? 2 : 3,
           animation: `${pulse} 3s ease-in-out infinite`,
         }}
       >
@@ -102,12 +103,12 @@ const SplashScreen = () => {
           sx={{
             display: 'inline-flex',
             position: 'relative',
-            mb: 4,
+            mb: isMobile ? 2 : 4,
           }}
         >
           <PublicIcon
             sx={{
-              fontSize: 120,
+              fontSize: isMobile ? 80 : 120,
               color: 'white',
               filter: 'drop-shadow(0 0 8px rgba(255,255,255,0.5))',
               animation: `${float} 6s ease-in-out infinite`,
@@ -116,10 +117,10 @@ const SplashScreen = () => {
           <ExploreIcon
             sx={{
               position: 'absolute',
-              fontSize: 48,
+              fontSize: isMobile ? 32 : 48,
               color: theme.palette.warning.light,
-              top: -10,
-              right: -20,
+              top: isMobile ? -5 : -10,
+              right: isMobile ? -15 : -20,
               animation: `${float} 4s ease-in-out infinite`,
               animationDelay: '0.5s',
             }}
@@ -127,28 +128,31 @@ const SplashScreen = () => {
         </Box>
 
         <Typography
-          variant="h2"
+          variant={isMobile ? "h3" : "h2"}
           component="h1"
           gutterBottom
           sx={{
             fontWeight: 800,
             letterSpacing: 1.5,
             textShadow: '0 2px 10px rgba(0,0,0,0.2)',
-            mb: 2,
+            mb: isMobile ? 1 : 2,
+            fontSize: isMobile ? '2rem' : 'inherit',
           }}
         >
           EXPLORE COUNTRIES
         </Typography>
 
         <Typography
-          variant="h6"
+          variant={isMobile ? "subtitle1" : "h6"}
           sx={{
             fontWeight: 300,
             letterSpacing: 1,
             maxWidth: 500,
             mx: 'auto',
-            mb: 4,
+            mb: isMobile ? 2 : 4,
             textShadow: '0 1px 3px rgba(0,0,0,0.2)',
+            px: isMobile ? 1 : 0,
+            fontSize: isMobile ? '0.9rem' : 'inherit',
           }}
         >
           Journey across borders with a single click
@@ -163,7 +167,7 @@ const SplashScreen = () => {
             background: 'rgba(255, 255, 255, 0.2)',
             backdropFilter: 'blur(8px)',
             borderRadius: 3,
-            p: 2,
+            p: isMobile ? 1.5 : 2,
             boxShadow: '0 4px 20px rgba(0, 0, 0, 0.1)',
           }}
         >
@@ -171,7 +175,7 @@ const SplashScreen = () => {
             variant="determinate"
             value={progress}
             sx={{
-              height: 8,
+              height: isMobile ? 6 : 8,
               borderRadius: 4,
               backgroundColor: 'rgba(255,255,255,0.3)',
               '& .MuiLinearProgress-bar': {
@@ -186,6 +190,7 @@ const SplashScreen = () => {
               mt: 1,
               fontWeight: 500,
               letterSpacing: 0.5,
+              fontSize: isMobile ? '0.75rem' : 'inherit',
             }}
           >
             PREPARING YOUR JOURNEY... {Math.round(progress)}%
@@ -197,14 +202,14 @@ const SplashScreen = () => {
       <FlightIcon
         sx={{
           position: 'absolute',
-          fontSize: 48,
+          fontSize: isMobile ? 32 : 48,
           color: 'rgba(255,255,255,0.9)',
-          bottom: 40,
-          left: '10%',
+          bottom: isMobile ? 20 : 40,
+          left: isMobile ? '5%' : '10%',
           animation: `${float} 5s ease-in-out infinite`,
           transform: 'rotate(45deg)',
         }}
-        />
+      />
     </Box>
   );
 };

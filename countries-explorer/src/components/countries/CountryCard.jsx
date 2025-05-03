@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
   Card,
@@ -60,11 +60,12 @@ const CountryCard = ({ country, index }) => {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.3, delay: index * 0.05 }}
-      style={{ height: '100%' }}
+      style={{ width: '100%', height: '100%' }}
     >
       <Card
         sx={{
           height: '100%',
+          width: '100%',
           display: 'flex',
           flexDirection: 'column',
           borderRadius: '12px',
@@ -95,13 +96,13 @@ const CountryCard = ({ country, index }) => {
           sx={{ 
             height: '100%',
             display: 'flex',
-            flexDirection: 'column'
+            flexDirection: 'column',
+            flexGrow: 1
           }}
         >
           {/* Flag image with fixed aspect ratio */}
           <Box sx={{
             width: '100%',
-            height: 0,
             paddingTop: '56.25%', // 16:9 aspect ratio
             position: 'relative',
             overflow: 'hidden'
@@ -131,41 +132,46 @@ const CountryCard = ({ country, index }) => {
             display: 'flex',
             flexDirection: 'column',
             p: 2,
-            height: 'calc(100% - 56.25% - 4px)', // Subtract flag height and region bar
+            pb: 4,
+            position: 'relative'
           }}>
-            {/* Country name */}
+            {/* Country name - Fixed height */}
             <Typography
               variant="h6"
               component="h3"
               sx={{
                 fontWeight: 700,
                 mb: 2,
-                minHeight: '3em',
+                minHeight: '2.8em', // Fixed height for 2 lines
                 display: '-webkit-box',
                 WebkitLineClamp: 2,
                 WebkitBoxOrient: 'vertical',
                 overflow: 'hidden',
-                lineHeight: '1.2em',
-                height: '2.4em' // 2 lines of text
+                lineHeight: '1.4em'
               }}
             >
               {name}
             </Typography>
 
-            {/* Country details */}
+            {/* Country details - Fixed height items */}
             <Stack spacing={1.5} sx={{ flexGrow: 1 }}>
-              <Box sx={{ display: 'flex', alignItems: 'center' }}>
+              <Box sx={{ 
+                display: 'flex', 
+                alignItems: 'center',
+                minHeight: '40px' // Fixed height for each row
+              }}>
                 <Avatar sx={{ 
                   bgcolor: `${regionColor}15`, 
                   color: regionColor,
                   width: 32, 
                   height: 32,
-                  mr: 1.5
+                  mr: 1.5,
+                  flexShrink: 0
                 }}>
                   <PeopleAltOutlined fontSize="small" />
                 </Avatar>
                 <Box sx={{ flex: 1, minWidth: 0 }}>
-                  <Typography variant="caption" color="text.secondary">
+                  <Typography variant="caption" color="text.secondary" display="block">
                     Population
                   </Typography>
                   <Typography 
@@ -179,18 +185,23 @@ const CountryCard = ({ country, index }) => {
                 </Box>
               </Box>
 
-              <Box sx={{ display: 'flex', alignItems: 'center' }}>
+              <Box sx={{ 
+                display: 'flex', 
+                alignItems: 'center',
+                minHeight: '40px' // Fixed height for each row
+              }}>
                 <Avatar sx={{ 
                   bgcolor: `${regionColor}15`, 
                   color: regionColor,
                   width: 32, 
                   height: 32,
-                  mr: 1.5
+                  mr: 1.5,
+                  flexShrink: 0
                 }}>
                   <PublicOutlined fontSize="small" />
                 </Avatar>
                 <Box sx={{ flex: 1, minWidth: 0 }}>
-                  <Typography variant="caption" color="text.secondary">
+                  <Typography variant="caption" color="text.secondary" display="block">
                     Region
                   </Typography>
                   <Typography 
@@ -204,18 +215,23 @@ const CountryCard = ({ country, index }) => {
                 </Box>
               </Box>
 
-              <Box sx={{ display: 'flex', alignItems: 'center' }}>
+              <Box sx={{ 
+                display: 'flex', 
+                alignItems: 'center',
+                minHeight: '40px' // Fixed height for each row
+              }}>
                 <Avatar sx={{ 
                   bgcolor: `${regionColor}15`, 
                   color: regionColor,
                   width: 32, 
                   height: 32,
-                  mr: 1.5
+                  mr: 1.5,
+                  flexShrink: 0
                 }}>
                   <LocationCityOutlined fontSize="small" />
                 </Avatar>
                 <Box sx={{ flex: 1, minWidth: 0 }}>
-                  <Typography variant="caption" color="text.secondary">
+                  <Typography variant="caption" color="text.secondary" display="block">
                     Capital
                   </Typography>
                   <Typography 
@@ -230,14 +246,27 @@ const CountryCard = ({ country, index }) => {
               </Box>
             </Stack>
 
-            {/* Languages */}
+            {/* Languages - Fixed height */}
             {languages.length > 0 && (
-              <Box sx={{ mt: 'auto', pt: 1, borderTop: `1px solid ${theme.palette.divider}` }}>
-                <Box sx={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap', gap: 1 }}>
-                  <LanguageOutlined 
-                    fontSize="small" 
-                    sx={{ color: regionColor, mr: 0.5 }} 
-                  />
+              <Box sx={{ 
+                mt: 'auto',
+                pt: 1.5,
+                minHeight: '42px', // Fixed height for language section
+                borderTop: `1px solid ${theme.palette.divider}`,
+                display: 'flex',
+                alignItems: 'center',
+                gap: 1
+              }}>
+                <LanguageOutlined 
+                  fontSize="small" 
+                  sx={{ color: regionColor, flexShrink: 0 }} 
+                />
+                <Box sx={{ 
+                  display: 'flex', 
+                  flexWrap: 'wrap', 
+                  gap: 0.5,
+                  alignItems: 'center'
+                }}>
                   {languages.slice(0, 2).map((lang, idx) => (
                     <Tooltip key={idx} title={lang}>
                       <Chip
@@ -280,24 +309,27 @@ const CountryCard = ({ country, index }) => {
           className="favorite-button"
           sx={{
             position: 'absolute',
-            top: 8,
+            bottom: 8,
             right: 8,
             zIndex: 2,
-            opacity: isFavorite(cca3) ? 1 : 0.7,
+            opacity: isFavorite(cca3) ? 1 : 0,
             transition: 'opacity 0.2s ease-in-out',
+            '&:hover': {
+              opacity: 1
+            }
           }}
         >
           <IconButton
             onClick={handleFavoriteClick}
             size="small"
             sx={{
-              color: isFavorite(cca3) ? theme.palette.error.main : theme.palette.grey[100],
+              color: isFavorite(cca3) ? theme.palette.error.main : theme.palette.text.secondary,
               backgroundColor: theme.palette.background.paper,
               boxShadow: theme.shadows[2],
               '&:hover': {
                 backgroundColor: theme.palette.background.paper,
-                transform: 'scale(1.1)',
-                opacity: 1
+                color: theme.palette.error.main,
+                transform: 'scale(1.1)'
               }
             }}
           >

@@ -15,17 +15,16 @@ import {
   InputLabel,
   Select,
   OutlinedInput,
-  Chip
+  Chip,
+  useMediaQuery
 } from '@mui/material';
 import {
-  
   Public as RegionIcon,
   Language as LanguageIcon,
   Search as SearchIcon,
   AccountCircle as ProfileIcon,
   ExitToApp as LogoutIcon,
   Brightness4 as ThemeIcon,
-  
   Place as PlaceIcon,
   Translate as TranslateIcon
 } from '@mui/icons-material';
@@ -35,17 +34,17 @@ import CountryList from '../components/countries/CountryList';
 import FavouritesPage from './FavouritesPage';
 import SearchBar from '../components/common/SearchBar';
 import ThemeToggle from '../theme/ThemeToggle';
-
 import { useCountries } from '../hooks/useCountries';
 import { useAuth } from '../hooks/useAuth';
 import { Favorite } from '@mui/icons-material';
-
 
 const HomePage = () => {
   const theme = useTheme();
   const navigate = useNavigate();
   const { isAuthenticated, user, logout } = useAuth();
   const [anchorEl, setAnchorEl] = useState(null);
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+  const isTablet = useMediaQuery(theme.breakpoints.down('md'));
   
   const { 
     countries, 
@@ -120,15 +119,24 @@ const HomePage = () => {
   ];
 
   return (
-    <Container maxWidth="xl" sx={{ py: 4 }}>
+    <Container 
+      maxWidth="xl" 
+      disableGutters 
+      sx={{ 
+        py: isMobile ? 2 : 4,
+        px: { xs: 2, sm: 3, md: 4 }
+      }}
+    >
       {/* Top Navigation Bar */}
       <Box 
         sx={{ 
           display: 'flex', 
           justifyContent: 'flex-end',
           alignItems: 'center',
-          mb: 3,
-          gap: 2
+          mb: isMobile ? 1 : 3,
+          gap: isMobile ? 1 : 2,
+          maxWidth: '1600px',
+          mx: 'auto'
         }}
       >
         {/* Theme Toggle Button */}
@@ -142,7 +150,7 @@ const HomePage = () => {
           aria-controls="menu-appbar"
           aria-haspopup="true"
           sx={{
-            p: 1,
+            p: isMobile ? 0.5 : 1,
             border: `1px solid ${theme.palette.divider}`,
             borderRadius: '8px',
             '&:hover': {
@@ -152,10 +160,11 @@ const HomePage = () => {
         >
           <Avatar 
             sx={{ 
-              width: 32, 
-              height: 32, 
+              width: isMobile ? 28 : 32, 
+              height: isMobile ? 28 : 32, 
               bgcolor: theme.palette.primary.main,
-              color: theme.palette.primary.contrastText
+              color: theme.palette.primary.contrastText,
+              fontSize: isMobile ? '0.8rem' : 'inherit'
             }}
             alt={user?.username || user?.email || 'User'}
           >
@@ -191,12 +200,10 @@ const HomePage = () => {
             horizontal: 'right',
           }}
         >
-          
           <MenuItem onClick={() => handleNavigate('/favorites')}>
-    <Favorite sx={{ mr: 1.5, color: theme.palette.error.main }} />
-    <Typography variant="body2">Favorites</Typography>
-  </MenuItem>
-          
+            <Favorite sx={{ mr: 1.5, color: theme.palette.error.main }} />
+            <Typography variant="body2">Favorites</Typography>
+          </MenuItem>
           <Divider />
           <MenuItem onClick={handleLogout}>
             <LogoutIcon sx={{ mr: 1.5, color: theme.palette.error.main }} />
@@ -210,10 +217,12 @@ const HomePage = () => {
       {/* Main Content */}
       <Box 
         sx={{ 
-          mb: 5,
+          mb: isMobile ? 3 : 5,
           display: 'flex',
           flexDirection: 'column',
-          alignItems: 'center'
+          alignItems: 'center',
+          maxWidth: '1600px',
+          mx: 'auto'
         }}
       >
         {/* Enhanced Animated Main Title */}
@@ -230,8 +239,9 @@ const HomePage = () => {
           sx={{
             position: 'relative',
             textAlign: 'center',
-            mb: 5,
-            overflow: 'hidden'
+            mb: isMobile ? 3 : 5,
+            overflow: 'hidden',
+            width: '100%'
           }}
         >
           <motion.div
@@ -244,11 +254,11 @@ const HomePage = () => {
               component="h1" 
               align="center" 
               sx={{ 
-                fontSize: { xs: '1.8rem', sm: '2.2rem', md: '2.6rem', lg: '3rem' },
+                fontSize: isMobile ? '1.8rem' : isTablet ? '2.2rem' : '2.6rem',
                 fontWeight: 900,
                 letterSpacing: '0.02em',
                 lineHeight: 1.1,
-                mb: 2,
+                mb: isMobile ? 1 : 2,
                 textTransform: 'uppercase',
                 background: `linear-gradient(45deg, 
                   ${theme.palette.primary.dark}, 
@@ -279,20 +289,20 @@ const HomePage = () => {
               transition={{ delay: 0.5, duration: 0.7 }}
             >
               <Typography 
-                variant="h4" 
+                variant={isMobile ? "h6" : "h4"}
                 component="p"
                 sx={{
                   color: theme.palette.text.secondary,
                   maxWidth: '800px',
                   mx: 'auto',
                   fontWeight: 400,
-                  mb: 4,
+                  mb: isMobile ? 2 : 4,
                   textAlign: 'center',
                   position: 'relative',
                   '&::after': {
                     content: '""',
                     position: 'absolute',
-                    bottom: '-15px',
+                    bottom: isMobile ? '-10px' : '-15px',
                     left: '50%',
                     width: '80px',
                     height: '3px',
@@ -319,8 +329,8 @@ const HomePage = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.3 }}
           sx={{ 
-            p: 4, 
-            mb: 4, 
+            p: isMobile ? 2 : 4, 
+            mb: isMobile ? 2 : 4, 
             borderRadius: 3,
             width: '100%',
             maxWidth: '1400px',
@@ -330,9 +340,9 @@ const HomePage = () => {
             boxShadow: theme.shadows[4]
           }}
         >
-          <Grid container spacing={3} alignItems="center" justifyContent="center">
+          <Grid container spacing={isMobile ? 1 : 3} alignItems="center" justifyContent="center">
             {/* Search Bar with Icon */}
-            <Grid item xs={12} md={5}>
+            <Grid item xs={12} md={isTablet ? 12 : 5}>
               <SearchBar 
                 onSearch={handleSearch} 
                 startAdornment={
@@ -360,7 +370,7 @@ const HomePage = () => {
             </Grid>
             
             {/* Region Filter with Icon */}
-            <Grid item xs={12} sm={6} md={3}>
+            <Grid item xs={12} sm={6} md={isTablet ? 6 : 3}>
               <FormControl fullWidth>
                 <InputLabel 
                   id="region-filter-label"
@@ -427,7 +437,7 @@ const HomePage = () => {
             </Grid>
             
             {/* Language Filter with Icon */}
-            <Grid item xs={12} sm={6} md={3}>
+            <Grid item xs={12} sm={6} md={isTablet ? 6 : 3}>
               <FormControl fullWidth>
                 <InputLabel 
                   id="language-select-label"
@@ -495,7 +505,22 @@ const HomePage = () => {
             
             {/* Quick Filter Chips */}
             <Grid item xs={12}>
-              <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1, justifyContent: 'center', mt: 1 }}>
+              <Box sx={{ 
+                display: 'flex', 
+                flexWrap: 'wrap', 
+                gap: 1, 
+                justifyContent: 'center', 
+                mt: 1,
+                overflowX: 'auto',
+                pb: 1,
+                '&::-webkit-scrollbar': {
+                  height: '4px',
+                },
+                '&::-webkit-scrollbar-thumb': {
+                  backgroundColor: theme.palette.primary.main,
+                  borderRadius: '2px',
+                }
+              }}>
                 <Chip
                   icon={<PlaceIcon />}
                   label="All Countries"
@@ -506,6 +531,7 @@ const HomePage = () => {
                   color={!filters.region && !filters.language ? 'primary' : 'default'}
                   variant={!filters.region && !filters.language ? 'filled' : 'outlined'}
                   sx={{ borderRadius: '50px', px: 1 }}
+                  size={isMobile ? "small" : "medium"}
                 />
                 {regions.map((region) => (
                   <Chip
@@ -516,6 +542,7 @@ const HomePage = () => {
                     color={filters.region === region.value ? 'primary' : 'default'}
                     variant={filters.region === region.value ? 'filled' : 'outlined'}
                     sx={{ borderRadius: '50px', px: 1 }}
+                    size={isMobile ? "small" : "medium"}
                   />
                 ))}
               </Box>
@@ -524,13 +551,11 @@ const HomePage = () => {
         </Box>
         
         {/* Country List - Centered */}
-        <Box sx={{ width: '100%', maxWidth: '1400px' }}>
-          <CountryList 
-            countries={countries}
-            loading={loading}
-            error={error}
-          />
-        </Box>
+        <CountryList 
+          countries={countries}
+          loading={loading}
+          error={error}
+        />
       </Box>
     </Container>
   );

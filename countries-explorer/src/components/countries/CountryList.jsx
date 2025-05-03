@@ -133,7 +133,7 @@ const CountryList = ({ countries, loading, error }) => {
 
   return (
     <Fade in timeout={800}>
-      <Container maxWidth="lg" sx={{ py: 4 }}>
+      <Container maxWidth="xl" sx={{ py: 4 }}>
         <Grid
           container
           spacing={3}
@@ -158,12 +158,10 @@ const CountryList = ({ countries, loading, error }) => {
               sm={6}
               md={4}
               lg={3}
+              xl={2.4}
               sx={{
                 display: 'flex',
-                minHeight: '100%',
-                '& > div': {
-                  width: '100%'
-                }
+                minHeight: '420px' // Fixed minimum height for all cards
               }}
             >
               <CountryCard country={country} index={index} />

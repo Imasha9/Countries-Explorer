@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import { CssBaseline, Box, Container } from '@mui/material';
 import { AuthProvider } from './contexts/AuthContext';
+import { ThemeContextProvider } from './contexts/ThemeContext';
 import SplashScreen from './pages/SplashScreen';
 import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
@@ -37,53 +38,55 @@ function App() {
 
   return (
     <AuthProvider>
-      <CssBaseline />
-      <Box
-        sx={{
-          display: 'flex',
-          flexDirection: 'column',
-          minHeight: '100vh',
-        }}
-      >
-        <Container
-          maxWidth="xl"
+      <ThemeContextProvider>
+        <CssBaseline />
+        <Box
           sx={{
-            flexGrow: 1,
-            py: 4,
+            display: 'flex',
+            flexDirection: 'column',
+            minHeight: '100vh',
           }}
         >
-          <Routes>
-            <Route path="/" element={<Navigate to="/home" replace />} />
-            <Route path="/login" element={<LoginPage />} />
-            <Route path="/register" element={<RegisterPage />} />
-            <Route
-              path="/home"
-              element={
-                <ProtectedRoute>
-                  <HomePage />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/country/:code"
-              element={
-                <ProtectedRoute>
-                  <CountryDetailPage />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/favorites"
-              element={
-                <ProtectedRoute>
-                  <FavoritesPage />
-                </ProtectedRoute>
-              }
-            />
-          </Routes>
-        </Container>
-        {showFooter && <Footer />}
-      </Box>
+          <Container
+            maxWidth="xl"
+            sx={{
+              flexGrow: 1,
+              py: 4,
+            }}
+          >
+            <Routes>
+              <Route path="/" element={<Navigate to="/home" replace />} />
+              <Route path="/login" element={<LoginPage />} />
+              <Route path="/register" element={<RegisterPage />} />
+              <Route
+                path="/home"
+                element={
+                  <ProtectedRoute>
+                    <HomePage />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/country/:code"
+                element={
+                  <ProtectedRoute>
+                    <CountryDetailPage />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/favorites"
+                element={
+                  <ProtectedRoute>
+                    <FavoritesPage />
+                  </ProtectedRoute>
+                }
+              />
+            </Routes>
+          </Container>
+          {showFooter && <Footer />}
+        </Box>
+      </ThemeContextProvider>
     </AuthProvider>
   );
 }
